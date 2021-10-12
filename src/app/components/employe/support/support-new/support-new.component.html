@@ -1,0 +1,20 @@
+<mat-form-field appearance="fill" style="margin-top: 25px; width: 100%;">
+    <mat-label>Titre</mat-label>
+    <input matInput [(ngModel)]="titre">
+</mat-form-field>
+
+<mat-form-field appearance="fill" style="margin-top: 10px; width: 100%;">
+    <mat-label>Expliquer votre problem</mat-label>
+    <textarea matInput [(ngModel)]="description"></textarea>
+</mat-form-field>
+
+<p>
+    <input type="file" (change)='onFileSelected($event)' accept="image/*"/>
+</p>
+
+<div style="margin-top: 10px; width: 100%; text-align: end;">
+    <button mat-flat-button color="primary" (click)="envoyer()">
+        <mat-icon style="font-size: 20px;">send</mat-icon>
+        Envoyer
+    </button>
+</div>

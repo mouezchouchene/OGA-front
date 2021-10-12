@@ -1,0 +1,11 @@
+<div style="width: 620px;">
+    <mat-form-field style="width: 100%" appearance="fill">
+        <mat-label>Blockage</mat-label>
+        <textarea matInput placeholder="Décrire votre problem .." [(ngModel)]="problem"></textarea>
+    </mat-form-field>
+    <br/>
+    <button mat-button style="color: coral;" (click)='reportProblem()'>
+        <mat-icon>send</mat-icon>
+        Envoyer
+    </button>
+</div>

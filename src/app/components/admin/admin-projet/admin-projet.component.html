@@ -1,0 +1,193 @@
+<div class="page">
+    <div class="container" *ngIf="!projetExist">
+        <mat-card class="container">
+            Aucun projet avec l'id {{idProject}}
+        </mat-card>
+    </div>
+    <div class="container" *ngIf="projetExist">
+        
+        <mat-card class="container">
+            
+            <form class="example-form" style="width: 100%; justify-content: space-between; display: flex;">
+                <mat-form-field class="example-full-width" style="width: 48%;">
+                  <mat-label>Titre</mat-label>
+                  <input matInput [(ngModel)]="title" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              
+                <mat-form-field class="example-full-width" style="width: 48%;">
+                    <mat-label>Date Début</mat-label>
+                    <input matInput [(ngModel)]="dateDebut" [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+              </form>
+
+              <mat-form-field class="example-full-width" style="width: 100%;">
+                <mat-label>Description</mat-label>
+                <input matInput [(ngModel)]="description" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+
+              <br/>
+
+              <div style="width: 100%; text-align: right;">
+                <button mat-flat-button color="primary" style="margin-right: 15px;" (click)='maj()'>Mettre à jour</button>
+                <button mat-flat-button color="warn" (click)='supprimer()'>Supprimer</button>
+              </div>
+              
+        </mat-card>
+
+        <mat-card class="container">
+            <h3 style="text-align: left;" >Employés affectés au projet</h3>
+            <div class="grid-container">
+                <div class="grid-item" *ngFor="let emp of empsDansLeProjet">
+                    <img *ngIf="emp.profileImage" src={{emp.profileImage}} />
+                    <img *ngIf="!emp.profileImage" src="../../../../assets/default_profile.png" />
+                    <p>{{emp.prenom + ' ' + emp.nom}}</p>
+                    <button mat-button style="color: red;" (click)='deleteUserFromProject(emp.id)'>Delete</button>
+                </div>
+            </div>
+        </mat-card>
+
+
+        <div class="container">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" style="width: calc(100% + 32px);" >
+                    <mat-expansion-panel-header >
+                        <mat-panel-title >
+                            <span class="material-icons" style="margin-top: 16px;">
+                                add
+                            </span>
+                            <h3 style="margin-left:10px; font-size: larger; margin-top: 15px;">Ajouter un employé au projet</h3>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header> 
+                    <div class="container">
+                          <mat-form-field appearance="fill" style="width:80%">
+                              <mat-label>Ajouter un employer au projet *</mat-label>
+                              <mat-select [formControl]="employerAAjouter">
+                                  <mat-option *ngFor="let emp of employesNonAffectes" [value]='emp' > {{emp.prenom+" "+emp.nom}} </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                   </div>
+                   <mat-action-row>
+                      <button 
+                          mat-raised-button  
+                          color="primary"
+                          (click)='ajouterEMplyeAuProjet()'
+                          >
+                          Ajouter l'employé
+                      </button>
+                   </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+
+        <div class="container">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" style="width: calc(100% + 32px);" >
+                    <mat-expansion-panel-header >
+                        <mat-panel-title >
+                            <span class="material-icons" style="margin-top: 16px;">
+                                add
+                            </span>
+                            <h3 style="margin-left:10px; font-size: larger; margin-top: 15px;">Ajouter une tache</h3>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header> 
+                    <div class="container">
+                        <div style="display: flex; width: 100%; justify-content: space-between;">
+                            <mat-form-field appearance="fill" style="width: 48%;">
+                                <mat-label>Titre</mat-label>
+                                <input matInput [(ngModel)]="titreTache">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" style="width: 48%;">
+                                <mat-label>Description</mat-label>
+                                <input matInput [(ngModel)]="descTache">
+                            </mat-form-field>
+                        </div>
+
+                        <!-- FIXME: <div>
+                            <label >Difficulté:</label>
+                            <mat-radio-group [(ngModel)]="dificulte">
+                              <mat-radio-button value="facile">Facile</mat-radio-button>
+                              <mat-radio-button value="normal">Normal</mat-radio-button>
+                              <mat-radio-button value="difficil">Difficil</mat-radio-button>
+                            </mat-radio-group>
+                        </div> -->
+
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Date Début</mat-label>
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="dateDebutTache">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                            
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Date Fin</mat-label>
+                            <input matInput [matDatepicker]="picker1" [(ngModel)]="dateFinTache">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                        
+                     </div>
+                    <mat-action-row>
+                        <button 
+                            mat-raised-button  
+                            color="primary"
+                            (click)='ajouterTache()'
+                            >
+                            Ajouter la tache
+                        </button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+        <br/>
+        <br/>
+        <mat-card>
+            <h3 style="text-align: left;" >Liste des taches</h3>
+        </mat-card>
+
+        <div class="grid-container" >
+            <div class="grid-item" *ngFor="let tache of taches">      
+                <div style="background-color: rgb(168, 167, 167); padding: 5px; border-radius: 5px;">
+                    <div *ngIf="tache.avancement == 100"  style="background-color: rgb(63, 179, 28); height: 35px;"></div>
+                    <div *ngIf="tache.avancement < 100 && !tache.problem" style="background-color: rgb(247, 168, 23); height: 35px;"></div>
+                    <div *ngIf="tache.avancement < 100 && tache.problem" style="background-color: rgb(192, 31, 3); height: 35px;"></div>
+                        <div style="background-color: white; text-align: left; padding: 5px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <h4 style="font-weight: bold;">{{tache.titre}}</h4>
+                                <div style="text-align:'right';">
+                                    <mat-icon 
+                                        style="cursor: pointer;"
+                                        (click)='openDialog(tache)'
+                                    >
+                                        more_vert
+                                    </mat-icon>
+                                </div>
+                            </div>
+                            <p style="font-size: small; color: rgb(36, 113, 202);">Difficulté: {{tache.dificulte}}</p>
+                            <p style="font-size: small; font-style: italic;">{{tache.description}}</p>
+                            <div style="display: flex; color: rgb(36, 113, 202);">
+                            <mat-icon>today</mat-icon>
+                            <p style="font-size: small; margin-top: 2px;">{{tache.dateDebut}} - {{tache.dateFin}}</p>
+                            </div>
+                            <h5 style="margin: 0%;">Avencement</h5>
+                            <mat-slider style="margin: 0%; width: 100%;" [(ngModel)]="tache.avancement" (input)="onInputChange($event, tache.id)"></mat-slider>
+                            <br/>
+                            <div style="display: flex; justify-content: space-between;">
+                            <button mat-button color="primary" (click)='downloadPdf(tache)'>
+                                <mat-icon>file_download</mat-icon>
+                                Export Pdf
+                            </button>
+                            <button mat-button style="color: red;" (click) = 'deleteTache(tache.id)'>Supprimer</button>
+                            </div>
+                            <div *ngIf="tache.problem" style="font-size: smaller;">
+                                <br/>
+                                <p style="font-weight: bold;" >Blockage:</p>
+                                <p>{{tache.problem}}</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>

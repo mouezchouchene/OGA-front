@@ -1,0 +1,63 @@
+<div class="page">
+    <div class="container">
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(1)" style="width: calc(100% + 32px);" >
+                <mat-expansion-panel-header >
+                    <mat-panel-title >
+                        <span class="material-icons" style="margin-top: 16px;">
+                            add_shopping_cart
+                        </span>
+                        <h3 style="margin-left:10px; font-size: larger; margin-top: 15px;">Ajouter un fournisseur</h3>
+                    </mat-panel-title>
+                </mat-expansion-panel-header> 
+                <div class="container">
+                    <div style="display: flex; justify-content: space-between;">
+                        <mat-form-field appearance="fill" style="width: 49%;">
+                            <mat-label>Nom</mat-label>
+                            <input matInput [(ngModel)]="nom">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="width: 49%;">
+                            <mat-label>Email</mat-label>
+                            <input matInput [(ngModel)]="email" >
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Addresse</mat-label>
+                        <input matInput [(ngModel)]="addresse" >
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="width:100%;">
+                        <mat-label>Telephone</mat-label>
+                        <input matInput type="number" [(ngModel)]="tel" >
+                    </mat-form-field>
+                </div>
+                <mat-action-row>
+                    <button mat-raised-button  color="primary" (click)='ajouterFournisseur()'>Ajouter</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <mat-card class="container">
+        <h2>Liste des fournisseurs</h2>
+        <br/>
+        <table style="width: 100%;">
+            <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Tél.</th>
+                <th>Addresse</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let fournisseur of fournisseurs">
+                <td>{{ fournisseur.nom }}</td>
+                <td>{{ fournisseur.email }}</td>
+                <td>{{ fournisseur.tel }}</td>
+                <td>{{ fournisseur.addresse }}</td>
+                <td>
+                    <mat-icon style="color: red; cursor: pointer;" (click)='deleteFournisseur(fournisseur.id)'>
+                        delete_outline
+                    </mat-icon>
+                </td>
+            </tr>
+        </table>
+    </mat-card>
+</div>

@@ -1,0 +1,26 @@
+<div class="page">
+    <mat-card class="container">
+        <h2 style="text-align: left;">Mes Projets</h2>
+        <mat-accordion *ngFor="let projet of mesProjets">
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{projet.title}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    <ng-container *ngIf="!projet.termine">(En cours)</ng-container>
+                    <ng-container *ngIf="projet.termine">Terminé</ng-container>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div style="display: flex; text-align: left; color: rgb(36, 113, 202);">
+                  <mat-icon>today</mat-icon>
+                  <h4 style="margin-left: 10px;">{{projet.dateDebut}}</h4>
+              </div>
+              <p style="text-align: left;">{{projet.description}}</p>
+              <div style="text-align: right;">
+                <button [routerLink]="getLink(projet.id)" routerLinkActive="router-link-active"  mat-flat-button style="background-color: rgb(36, 113, 202); color: white">Consulter</button>
+              </div>
+            </mat-expansion-panel>
+        </mat-accordion>     
+    </mat-card>
+</div>

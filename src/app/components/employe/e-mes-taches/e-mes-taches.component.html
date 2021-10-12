@@ -1,0 +1,50 @@
+<div class="page">
+  <div style="width: 95%; margin: 0%; margin-left: 2.5%;">
+    <mat-card style="text-align: left;">
+      <h2>Mes Taches</h2>
+    </mat-card>
+    <div class="grid-container" >
+      <div class="grid-item" *ngFor="let tache of taches">      
+        <div style="background-color: rgb(168, 167, 167); padding: 5px; border-radius: 5px;">
+          <div *ngIf="tache.avancement == 100"  style="background-color: rgb(63, 179, 28); height: 35px;"></div>
+          <div *ngIf="tache.avancement < 100 && !tache.problem" style="background-color: rgb(247, 168, 23); height: 35px;"></div>
+          <div *ngIf="tache.avancement < 100 && tache.problem" style="background-color: rgb(192, 31, 3); height: 35px;"></div>
+          <div style="background-color: white; text-align: left; padding: 5px;">
+            <h4 style="font-weight: bold;">{{tache.titre}}</h4>
+            <p style="font-size: small; color: rgb(36, 113, 202);">Difficulté: {{tache.dificulte}}</p>
+            <p style="font-size: small; font-style: italic;">{{tache.description}}</p>
+            <div style="display: flex; color: rgb(36, 113, 202);">
+              <mat-icon>today</mat-icon>
+              <p style="font-size: small; margin-top: 2px;">{{tache.dateDebut}} - {{tache.dateFin}}</p>
+            </div>
+            <h5 style="margin: 0%;">Avencement</h5>
+            <mat-slider class="example-margin" [(ngModel)]="tache.avancement" (input)="onInputChange($event, tache.id)"></mat-slider>
+            <br/>
+            
+            <!-- FIXME: <h3>Employés affectés:</h3>
+            <div *ngFor="let userId of tache.usersList" class="">
+              <img [src]='getUserImage(userId)'/>
+            </div> -->
+
+            <br/>
+            <div style="display: flex; justify-content: space-between;">
+              <button mat-button color="primary" (click)='downloadPdf(tache)'>
+                <mat-icon>file_download</mat-icon>
+                Export Pdf
+              </button>
+              <button mat-button style="color: coral;" (click)='openDialog(tache)'>
+                <mat-icon>report_problem</mat-icon>
+                Blockage
+              </button>
+            </div>
+            <br/>
+            <div *ngIf="tache.problem" style="font-size: medium;">
+              <p style="font-weight: bold;" >Blockage:</p>
+              <p>{{tache.problem}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

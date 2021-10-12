@@ -1,0 +1,20 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: baseline;
+}
+
+.grid-item {
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    display: block;
+    font-size: 30px;
+    text-align: center;
+    margin: 20px;
+    width: 95%;
+}
+
+.example-margin {
+   width: 100%;
+   margin: 0%;
+}
